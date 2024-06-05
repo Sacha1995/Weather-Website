@@ -23,14 +23,17 @@ async function getWeather(latitude, longitude) {
   let result = await fetch(url);
   result = await result.json();
 
-  function cityName(city) {
-    if (city == undefined) {
-      return `The weather for the nex 5 days;`;
-    } else {
-      return `The weather for the nex 5 days in ${result.city.name}:`;
-    }
-  }
-  createHTML(cityName(result.city.name), rootRef);
+  // Change place name
+  let title =
+    result.city.name == undefined ? `Weather` : `Weather ${result.city.name}`;
+
+  let intro =
+    result.city.name == undefined
+      ? `The weather for the nex 5 days;`
+      : `The weather for the nex 5 days in ${result.city.name}:`;
+
+  createHTML(title, rootRef, "h1");
+  createHTML(intro, rootRef);
 
   // createLists("ul", result.list);
   result.list.forEach((item) => {
@@ -45,9 +48,6 @@ function createHTML(text, container, tag = "p") {
   element.append(input);
   container.append(element);
 }
-
-createHTML("Weather", rootRef, "h1");
-// I tried to add the name of the city with ${result.city.name}, but that did not work. How would I do that?
 
 function create(item) {
   console.log(item);
@@ -64,6 +64,7 @@ function create(item) {
   createHTML(`Clouds: ${item.weather[0].description}`, div);
 }
 
+// get day and change date
 function Day(date) {
   const d = new Date(date);
   let weekdayIndex = d.getDay();
@@ -82,7 +83,3 @@ function Day(date) {
   let dayTitle = week[weekdayIndex] + " " + date;
   return dayTitle;
 }
-
-// const d = new Date("2024-06-05 18:00:00");
-// let day = d.getDay();
-// console.log(day);
