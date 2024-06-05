@@ -23,8 +23,14 @@ async function getWeather(latitude, longitude) {
   let result = await fetch(url);
   result = await result.json();
 
-  // console.log(result.city, result.list);
-  // console.log(result);
+  function cityName(city) {
+    if (city == undefined) {
+      return `The weather for the nex 5 days;`;
+    } else {
+      return `The weather for the nex 5 days in ${result.city.name}:`;
+    }
+  }
+  createHTML(cityName(result.city.name), rootRef);
 
   // createLists("ul", result.list);
   result.list.forEach((item) => {
@@ -41,7 +47,7 @@ function createHTML(text, container, tag = "p") {
 }
 
 createHTML("Weather", rootRef, "h1");
-createHTML(`here is the weather`, rootRef, "p"); // I tried to add the name of the city with ${result.city.name}, but that did not work. How would I do that?
+// I tried to add the name of the city with ${result.city.name}, but that did not work. How would I do that?
 
 function create(item) {
   console.log(item);
