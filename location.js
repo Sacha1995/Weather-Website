@@ -32,43 +32,48 @@ async function getWeather(latitude, longitude) {
       ? `The weather for the nex 5 days;`
       : `The weather for the nex 5 days in ${result.city.name}:`;
 
-  createHTML(title, rootRef, "h1");
-  createHTML(intro, rootRef);
+  createHTML(title, rootRef, "title", "h1");
+  createHTML(intro, rootRef, "intro");
 
   // createLists("ul", result.list);
   result.list.forEach((item) => {
     create(item);
   });
+
+  //add pictures clouds
+  const cloudsArray = document.getElementsByClassName("clouds");
+  Array.from(cloudsArray).forEach((item) => {
+    addClouds(item);
+  });
 }
 
 //turn it in html
-function createHTML(text, container, tag = "p") {
+function createHTML(text, container, className, tag = "p") {
   let input = document.createTextNode(text);
   let element = document.createElement(tag);
   element.append(input);
+  element.classList.add(className);
   container.append(element);
 }
 
 function create(item) {
-  console.log(item);
-  //create div container
+  //create div container - tried to use createHTML() did not work...
   let div = document.createElement("div");
   div.classList.add("weather-item");
   rootRef.append(div);
   //creating content
-  createHTML(Day(item.dt_txt), div, "h1");
-  createHTML(`Temperature: ${item.main.temp} °C`, div);
-  createHTML(`Maximum temperature: ${item.main.temp_max} °C`, div);
-  createHTML(`Minimum temperature: ${item.main.temp_min} °C`, div);
-  createHTML(`Windspeed: ${item.wind.speed}`, div);
-  createHTML(`Clouds: ${item.weather[0].description}`, div);
+  createHTML(Day(item.dt_txt), div, "date", "h2");
+  createHTML(`Temperature: ${item.main.temp} °C`, div, "temp");
+  createHTML(`Maximum temperature: ${item.main.temp_max} °C`, div, "maxTemp");
+  createHTML(`Minimum temperature: ${item.main.temp_min} °C`, div, "minTemp");
+  createHTML(`Windspeed: ${item.wind.speed}`, div, "wind");
+  createHTML(`Clouds: ${item.weather[0].description}`, div, "clouds");
 }
 
 // get day and change date
 function Day(date) {
   const d = new Date(date);
   let weekdayIndex = d.getDay();
-  console.log(weekdayIndex);
   const week = [
     "Monday",
     "Tuesday",
@@ -82,4 +87,74 @@ function Day(date) {
   date = date.substring(0, date.length - 3); // takes away the seconds
   let dayTitle = week[weekdayIndex] + " " + date;
   return dayTitle;
+}
+
+//Add pictures
+function addClouds(item) {
+  switch (item.innerHTML) {
+    case "Clouds: clear sky":
+      createHTML("", item, "clearSky", "img");
+      let clearSky = document.getElementsByClassName("clearSky");
+      addImage(clearSky, "./img/sun.png");
+      break;
+    case "Clouds: scattered clouds":
+      createHTML("", item, "scatteredClouds", "img");
+      let scatteredClouds = document.getElementsByClassName("scatteredClouds");
+      addImage(scatteredClouds, "./img/cloud-sun.png");
+      break;
+    case "Clouds: broken clouds":
+      createHTML("", item, "brokenClouds", "img");
+      let brokenClouds = document.getElementsByClassName("brokenClouds");
+      addImage(brokenClouds, "./img/cloud-sun.png");
+      break;
+    case "Clouds: overcast clouds":
+      createHTML("", item, "overcast", "img");
+      let overcast = document.getElementsByClassName("overcast");
+      addImage(overcast, "./img/only-cloud.png");
+      break;
+    case "Clouds: few clouds":
+      createHTML("", item, "fewClouds", "img");
+      let fewClouds = document.getElementsByClassName("fewClouds");
+      addImage(fewClouds, "./img/sunshine-with-little-clouds.png");
+      break;
+    case "Clouds: light rain":
+      createHTML("", item, "lightRain", "img");
+      let lightRain = document.getElementsByClassName("lightRain");
+      addImage(lightRain, "./img/sun-cloud-rain.png");
+      break;
+  }
+}
+
+function addImage(className, imgSrc) {
+  Array.from(className).forEach((it) => {
+    it.src = imgSrc;
+    it.style.width = "20px";
+    it.style.marginLeft = "10px";
+  });
+}
+
+//search API
+const search = document.createElement("input");
+search.setAttribute("type", "text");
+rootRef.append(search);
+
+const searchBtn = document.createElement("button");
+searchBtn.innerHTML = "Search";
+search.after(searchBtn);
+
+const searchInfo = document.createElement("p");
+searchInfo.innerHTML = "Search the weather in a city:";
+search.before(searchInfo);
+
+searchBtn.addEventListener("click", (e) => {
+  let searchCity = search.value;
+  getSearchAPI(searchCity);
+});
+
+async function getSearchAPI(city) {
+  let searchURL = `http://api.openweathermap.org/geo/1.0/direct?q=${city},&limit=5&appid=c9c04097e886eeff6e86ac740354f877`;
+  console.log(searchURL);
+  let result = await fetch(searchURL);
+  result = await result.json();
+  getWeather(result[0].lat, result[0].lon);
 }
