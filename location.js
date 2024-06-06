@@ -32,8 +32,8 @@ async function getWeather(latitude, longitude) {
       ? `The weather for the nex 5 days;`
       : `The weather for the nex 5 days in ${result.city.name}:`;
 
-  createHTML(title, rootRef, "title", "h1");
-  createHTML(intro, rootRef, "intro");
+  createHTML(title, containerWeather, "title", "h1");
+  createHTML(intro, containerWeather, "intro");
 
   // createLists("ul", result.list);
   result.list.forEach((item) => {
@@ -48,6 +48,9 @@ async function getWeather(latitude, longitude) {
 }
 
 //turn it in html
+createHTML("", rootRef, "containerWeather", "div");
+const containerWeather = document.querySelector(".containerWeather");
+
 function createHTML(text, container, className, tag = "p") {
   let input = document.createTextNode(text);
   let element = document.createElement(tag);
@@ -60,7 +63,7 @@ function create(item) {
   //create div container - tried to use createHTML() did not work...
   let div = document.createElement("div");
   div.classList.add("weather-item");
-  rootRef.append(div);
+  containerWeather.append(div);
   //creating content
   createHTML(Day(item.dt_txt), div, "date", "h2");
   createHTML(`Temperature: ${item.main.temp} °C`, div, "temp");
@@ -136,7 +139,7 @@ function addImage(className, imgSrc) {
 //search API
 const search = document.createElement("input");
 search.setAttribute("type", "text");
-rootRef.append(search);
+rootRef.prepend(search);
 
 const searchBtn = document.createElement("button");
 searchBtn.innerHTML = "Search";
@@ -156,5 +159,6 @@ async function getSearchAPI(city) {
   console.log(searchURL);
   let result = await fetch(searchURL);
   result = await result.json();
+  containerWeather.innerHTML = "";
   getWeather(result[0].lat, result[0].lon);
 }
