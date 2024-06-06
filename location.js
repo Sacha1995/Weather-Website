@@ -65,31 +65,22 @@ function create(item) {
   div.classList.add("weather-item");
   containerWeather.append(div);
   //creating content
-  createHTML(Day(item.dt_txt), div, "date", "h2");
-  createHTML(`Temperature: ${item.main.temp} °C`, div, "temp");
-  createHTML(`Maximum temperature: ${item.main.temp_max} °C`, div, "maxTemp");
-  createHTML(`Minimum temperature: ${item.main.temp_min} °C`, div, "minTemp");
-  createHTML(`Windspeed: ${item.wind.speed}`, div, "wind");
-  createHTML(`Clouds: ${item.weather[0].description}`, div, "clouds");
+  const { dt, wind, weather } = item;
+  const { temp_max, temp_min, temp } = item.main;
+
+  createHTML(unixToHuman(dt), div, "date", "h2");
+  createHTML(`Temperature: ${temp} °C`, div, "temp");
+  createHTML(`Maximum temperature: ${temp_max} °C`, div, "maxTemp");
+  createHTML(`Minimum temperature: ${temp_min} °C`, div, "minTemp");
+  createHTML(`Windspeed: ${wind.speed}`, div, "wind");
+  createHTML(`Clouds: ${weather[0].description}`, div, "clouds");
 }
 
 // get day and change date
-function Day(date) {
-  const d = new Date(date);
-  let weekdayIndex = d.getDay();
-  const week = [
-    "Monday",
-    "Tuesday",
-    "Wednesday",
-    "Thursday",
-    "Friday",
-    "Saturday",
-    "Sunday",
-  ];
-  date = date.replace("2024-", "");
-  date = date.substring(0, date.length - 3); // takes away the seconds
-  let dayTitle = week[weekdayIndex] + " " + date;
-  return dayTitle;
+function unixToHuman(UnixTime) {
+  const d = new Date(UnixTime * 1000);
+  let day = dayjs(d).format("dddd MMMM D, hh:mmA");
+  return day;
 }
 
 //Add pictures
