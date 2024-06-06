@@ -22,6 +22,7 @@ async function getWeather(latitude, longitude) {
   //get data and turn into object
   let result = await fetch(url);
   result = await result.json();
+  console.log(result);
 
   // Change place name
   let title =
@@ -35,15 +36,9 @@ async function getWeather(latitude, longitude) {
   createHTML(title, containerWeather, "title", "h1");
   createHTML(intro, containerWeather, "intro");
 
-  // createLists("ul", result.list);
+  // goes through the API info
   result.list.forEach((item) => {
     create(item);
-  });
-
-  //add pictures clouds
-  const cloudsArray = document.getElementsByClassName("clouds");
-  Array.from(cloudsArray).forEach((item) => {
-    addClouds(item);
   });
 }
 
@@ -51,12 +46,19 @@ async function getWeather(latitude, longitude) {
 createHTML("", rootRef, "containerWeather", "div");
 const containerWeather = document.querySelector(".containerWeather");
 
-function createHTML(text, container, className, tag = "p") {
+function createHTML(text, container, className, tag = "p", src) {
   let input = document.createTextNode(text);
   let element = document.createElement(tag);
   element.append(input);
   element.classList.add(className);
   container.append(element);
+
+  if (tag === "img") {
+    element.setAttribute(
+      "src",
+      `https://openweathermap.org/img/wn/${src}@2x.png`
+    );
+  }
 }
 
 function create(item) {
@@ -67,6 +69,7 @@ function create(item) {
   //creating content
   const { dt, wind, weather } = item;
   const { temp_max, temp_min, temp } = item.main;
+  const { icon } = weather[0];
 
   createHTML(unixToHuman(dt), div, "date", "h2");
   createHTML(`Temperature: ${temp} °C`, div, "temp");
@@ -74,6 +77,7 @@ function create(item) {
   createHTML(`Minimum temperature: ${temp_min} °C`, div, "minTemp");
   createHTML(`Windspeed: ${wind.speed}`, div, "wind");
   createHTML(`Clouds: ${weather[0].description}`, div, "clouds");
+  createHTML("", div, "image", "img", icon);
 }
 
 // get day and change date
@@ -81,50 +85,6 @@ function unixToHuman(UnixTime) {
   const d = new Date(UnixTime * 1000);
   let day = dayjs(d).format("dddd MMMM D, hh:mmA");
   return day;
-}
-
-//Add pictures
-function addClouds(item) {
-  switch (item.innerHTML) {
-    case "Clouds: clear sky":
-      createHTML("", item, "clearSky", "img");
-      let clearSky = document.getElementsByClassName("clearSky");
-      addImage(clearSky, "./img/sun.png");
-      break;
-    case "Clouds: scattered clouds":
-      createHTML("", item, "scatteredClouds", "img");
-      let scatteredClouds = document.getElementsByClassName("scatteredClouds");
-      addImage(scatteredClouds, "./img/cloud-sun.png");
-      break;
-    case "Clouds: broken clouds":
-      createHTML("", item, "brokenClouds", "img");
-      let brokenClouds = document.getElementsByClassName("brokenClouds");
-      addImage(brokenClouds, "./img/cloud-sun.png");
-      break;
-    case "Clouds: overcast clouds":
-      createHTML("", item, "overcast", "img");
-      let overcast = document.getElementsByClassName("overcast");
-      addImage(overcast, "./img/only-cloud.png");
-      break;
-    case "Clouds: few clouds":
-      createHTML("", item, "fewClouds", "img");
-      let fewClouds = document.getElementsByClassName("fewClouds");
-      addImage(fewClouds, "./img/sunshine-with-little-clouds.png");
-      break;
-    case "Clouds: light rain":
-      createHTML("", item, "lightRain", "img");
-      let lightRain = document.getElementsByClassName("lightRain");
-      addImage(lightRain, "./img/sun-cloud-rain.png");
-      break;
-  }
-}
-
-function addImage(className, imgSrc) {
-  Array.from(className).forEach((it) => {
-    it.src = imgSrc;
-    it.style.width = "20px";
-    it.style.marginLeft = "10px";
-  });
 }
 
 //search API
