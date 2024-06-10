@@ -13,7 +13,7 @@
 **************************
 */
 $funFont: "irish grover", sans-serif;
-$normalFont: "mukta", sans-serif;
+$normalFont: "poppins", sans-serif;
 $orange: rgba(251, 189, 99, 1);
 $purple: rgba(192, 171, 212, 1);
 $pink: rgba(240, 194, 194, 1);
@@ -35,7 +35,7 @@ $lightPink: rgba(241, 195, 193, 0.4);
   padding: 0px;
 }
 
-body {
+.main {
   padding: 10px;
 }
 
@@ -44,6 +44,10 @@ h2,
 h3,
 h4 {
   font-family: $funFont;
+}
+
+h2 {
+  font-size: 5vw;
 }
 
 p {
@@ -70,12 +74,75 @@ p {
   font-size: 20px;
   font-weight: bold;
   letter-spacing: 2px;
+  box-shadow: 0px 0px 3px $purple;
+  border-radius: 3px;
+}
+
+.searchBtn:hover {
+  cursor: pointer;
+  background-color: $pink;
+}
+
+.searchBar {
+  border-radius: 3px;
+  min-width: 100px;
+  max-width: 50vw;
 }
 
 .root input {
   font-family: $normalFont;
   font-size: 20px;
   margin-right: 10px;
+}
+
+.containerIntro {
+  background: linear-gradient(90deg, rgba(251, 189, 99, 1) 0%, rgba(240, 194, 194, 1) 50%, rgba(192, 171, 212, 1) 100%);
+  padding: 10px;
+
+}
+
+/*
+************END***********
+*/
+/*
+**************************
+          intro
+**************************
+*/
+h1 {
+  font-size: 7vw;
+}
+
+main>p {
+  margin-bottom: 20px;
+  font-size: 14px;
+}
+
+/*
+************END***********
+*/
+/*
+**************************
+        main weather
+**************************
+*/
+.containerWeather {
+  background-color: $lightOrange;
+  border: $orange solid 5px;
+  padding: 10px;
+}
+
+.answer {
+  font-family: $funFont;
+  font-size: 7vw;
+  text-align: center;
+}
+
+.changingImage {
+  width: 80%;
+  max-width: 600px;
+  display: block;
+  margin: 0px auto;
 }
 
 /*
