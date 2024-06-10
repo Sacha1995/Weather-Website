@@ -1,0 +1,72 @@
+/*
+**************************
+        description
+**************************
+*/
+/*
+************END***********
+*/
+/*
+**************************
+         SASS
+**************************
+*/
+/*
+************END***********
+*/
+/*
+**************************
+        general
+**************************
+*/
+* {
+  font-family: "mukta", sans-serif;
+  margin: 0px;
+  padding: 0px;
+}
+
+body {
+  padding: 10px;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-family: "irish grover", sans-serif;
+}
+
+p {
+  line-height: 20px;
+}
+
+.off {
+  display: none;
+}
+
+/*
+************END***********
+*/
+/*
+**************************
+        search
+**************************
+*/
+.searchBtn {
+  background-color: rgb(251, 189, 99);
+  font-family: "irish grover", sans-serif;
+  padding: 5px 10px;
+  font-size: 20px;
+  font-weight: bold;
+  letter-spacing: 2px;
+}
+
+.root input {
+  font-family: "mukta", sans-serif;
+  font-size: 20px;
+  margin-right: 10px;
+}
+
+/*
+************END***********
+*//*# sourceMappingURL=style.css.map */

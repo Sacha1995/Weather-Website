@@ -37,8 +37,13 @@ async function getWeather(latitude, longitude) {
   createHTML(intro, containerWeather, "intro");
 
   // goes through the API info
-  result.list.forEach((item) => {
-    create(item);
+  result.list.forEach((item, index) => {
+    create(item, index);
+  });
+
+  //filter
+  result.list.forEach((item, index) => {
+    filter(item, index);
   });
 }
 
@@ -61,10 +66,10 @@ function createHTML(text, container, className, tag = "p", src) {
   }
 }
 
-function create(item) {
+function create(item, index) {
   //create div container - tried to use createHTML() did not work...
   let div = document.createElement("div");
-  div.classList.add("weather-item");
+  div.id = `weather-item${index}`;
   containerWeather.append(div);
   //creating content
   const { dt, wind, weather } = item;
@@ -88,12 +93,14 @@ function unixToHuman(UnixTime) {
 }
 
 //search API
+//**************************Try later if we can shorten!************************************** */
 const search = document.createElement("input");
 search.setAttribute("type", "text");
 rootRef.prepend(search);
 
 const searchBtn = document.createElement("button");
 searchBtn.innerHTML = "Search";
+searchBtn.classList.add("searchBtn");
 search.after(searchBtn);
 
 const searchInfo = document.createElement("p");
@@ -112,4 +119,19 @@ async function getSearchAPI(city) {
   result = await result.json();
   containerWeather.innerHTML = "";
   getWeather(result[0].lat, result[0].lon);
+}
+
+//filter
+function filter(item, index) {
+  const date = new Date(item.dt * 1000);
+  const today = new Date();
+  let weatherItem = document.getElementById(`weather-item${index}`);
+  if (date.getDate() !== today.getDate()) {
+    console.log(weatherItem);
+    weatherItem.classList.add("off");
+  }
+  console.log(date.getHours());
+  if (date.getHours() === 12 || date.getHours() == 13) {
+    weatherItem.classList.remove("off");
+  }
 }
