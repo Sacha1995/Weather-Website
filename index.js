@@ -37,7 +37,7 @@ async function getWeather(latitude, longitude) {
   result = await result.json();
   console.log(result);
 
-  // Change place name
+  // Change place name & containers
   title = "Can the kids play outside?";
 
   intro =
@@ -49,6 +49,30 @@ async function getWeather(latitude, longitude) {
   intro = document.querySelector(".intro");
   createHTML(title, main, "title", "h1", "", "prepend");
   title = document.querySelector(".title");
+  createHTML("", main, "containerSun", "div");
+  let containerSun = document.querySelector(".containerSun");
+  createHTML(
+    "From when to when can the kids play outside?",
+    containerSun,
+    "sunQuestion"
+  );
+  createHTML(
+    `Sunrise today is at ${dayjs(result.city.sunrise).format("hh:mmA")}`,
+    containerSun,
+    "sunrise"
+  );
+  createHTML(
+    `Sunset today is at ${dayjs(result.city.sunset).format("hh:mmA")}`,
+    containerSun,
+    "sunset"
+  );
+  createHTML(
+    "",
+    containerSun,
+    "sunriseImg",
+    "img",
+    "./img/weather-icons/017-sunrise.svg"
+  );
 
   // goes through the API info
   result.list.forEach((item, index) => {
@@ -68,6 +92,10 @@ async function getWeather(latitude, longitude) {
   displayArr.forEach((item) => {
     comeDown(item, futureArr);
   });
+
+  let todayList = document.querySelectorAll(".today");
+  let todayListLast = todayList[todayList.length - 1];
+  todayListLast.classList.add("margin-bottom");
 
   //answer and picture
   createHTML(
@@ -133,16 +161,17 @@ function create(item, index) {
   const { temp_max, temp_min, temp } = item.main;
   icon = weather[0].icon;
 
-  createHTML(unixToHuman(dt), weatherItem, dt, "h2");
-  createHTML("", weatherItem, `statsContainer${index}`, "div");
-  // let date = document.querySelectorAll(".date")
+  createHTML("", weatherItem, `containerFuture${index}`, "div");
+  let containerFuture = document.querySelector(`.containerFuture${index}`);
+  createHTML(unixToHuman(dt), containerFuture, dt, "h2");
+  createHTML("", containerFuture, `statsContainer${index}`, "div");
   let statsContainer = document.querySelector(`.statsContainer${index}`);
   createHTML(`Temperature: ${Math.round(temp)} °C`, statsContainer, "temp");
   createHTML(`Max temp: ${Math.round(temp_max)} °C`, statsContainer, "maxTemp");
   createHTML(`Min temp: ${Math.round(temp_min)} °C`, statsContainer, "minTemp");
   createHTML(`Windspeed: ${Math.round(wind.speed)}`, statsContainer, "wind");
   createHTML(weather[0].description.capitalize(), statsContainer, "clouds");
-  createHTML("", weatherItem, `iconContainer${index}`, "div");
+  createHTML("", containerFuture, `iconContainer${index}`, "div");
   let iconContainer = document.querySelector(`.iconContainer${index}`);
   iconContainer.classList.add("iconContainer");
   createHTML(shortAnswer(item), iconContainer, "shortAnswer");
@@ -319,13 +348,11 @@ function comeDown(item, hiddenItem) {
       let unix2 = item2.querySelector("h2").className;
       let clickedDate = new Date(unix * 1000);
       let hiddenDate = new Date(unix2 * 1000);
-      console.log(clickedDate);
-      console.log(hiddenDate);
       if (hiddenDate.getDate() === clickedDate.getDate()) {
         if (item2.classList.contains("off")) {
           item2.classList.remove("off");
           item2.classList.add("on");
-        } else if (item2.classList.contains(!"display")) {
+        } else if (!item2.classList.contains("display")) {
           item2.classList.remove("on");
           item2.classList.add("off");
         }
