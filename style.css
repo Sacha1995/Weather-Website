@@ -59,7 +59,7 @@ p {
 .searchBtn {
   background-color: rgb(251, 189, 99);
   font-family: "irish grover", sans-serif;
-  padding: 5px 10px;
+  padding: 3px 10px;
   font-size: 20px;
   font-weight: bold;
   letter-spacing: 2px;
@@ -131,6 +131,11 @@ main > p {
   max-width: 600px;
   display: block;
   margin: 0px auto;
+}
+
+.image {
+  width: 60px;
+  height: 60px;
 }
 
 /*

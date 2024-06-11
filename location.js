@@ -1,6 +1,8 @@
 // //elements
 const rootRef = document.getElementById("root");
 let icon;
+let title;
+let intro;
 
 //initiate get location
 const options = { enableHighAccuracy: true, timeout: 5000, maximumAge: 0 };
@@ -26,15 +28,18 @@ async function getWeather(latitude, longitude) {
   console.log(result);
 
   // Change place name
-  let title = "Can the kids play outside?";
+  title = "Can the kids play outside?";
 
-  let intro =
+  intro =
     result.city.name == undefined
       ? `The weather for the nex 5 days;`
       : `The weather for the nex 5 days in ${result.city.name}:`;
 
   createHTML(intro, main, "intro", "p", "", "prepend");
+  intro = document.querySelector(".intro");
+  console.log(intro);
   createHTML(title, main, "title", "h1", "", "prepend");
+  title = document.querySelector(".title");
 
   // goes through the API info
   result.list.forEach((item, index) => {
@@ -89,10 +94,7 @@ function createHTML(
     if (src.startsWith("./img")) {
       element.setAttribute("src", src);
     } else {
-      element.setAttribute(
-        "src",
-        `https://openweathermap.org/img/wn/${src}@2x.png`
-      );
+      element.setAttribute("src", `./img/weather-icons/${src}.svg`);
     }
   }
 
@@ -130,30 +132,30 @@ function unixToHuman(UnixTime) {
     d.getDate() !== today.getDate() &&
     (d.getHours() === 12 || d.getHours() == 13)
   ) {
-    let day = dayjs(d).format("dddd MMMM D");
+    let day = dayjs(d).format("ddd MMMM D");
     return day;
   } else {
-    let day = dayjs(d).format("dddd MMMM D, hh:mmA");
+    let day = dayjs(d).format("ddd MMMM D, hh:mmA");
     return day;
   }
 }
 
 //search API
-const intro = document.createElement("div");
-intro.classList.add("containerIntro");
-rootRef.prepend(intro);
+const Containerintro = document.createElement("div");
+Containerintro.classList.add("containerIntro");
+rootRef.prepend(Containerintro);
 
 const searchInfo = createHTML(
   "Search the weather in a city:",
-  intro,
+  Containerintro,
   "searchInfo"
 );
 
-createHTML("", intro, "searchBar", "input");
+createHTML("", Containerintro, "searchBar", "input");
 const search = document.querySelector(".searchBar");
 search.setAttribute("type", "text");
 
-createHTML("Search", intro, "searchBtn", "button");
+createHTML("Search", Containerintro, "searchBtn", "button");
 const searchBtn = document.querySelector(".searchBtn");
 
 searchBtn.addEventListener("click", (e) => {
@@ -167,6 +169,8 @@ async function getSearchAPI(city) {
   let result = await fetch(searchURL);
   result = await result.json();
   containerWeather.innerHTML = "";
+  title.innerHTML = "";
+  intro.innerHTML = "";
   getWeather(result[0].lat, result[0].lon);
 }
 
@@ -191,23 +195,24 @@ function answer(input) {
   let icon = input.weather[0].icon;
   let id = input.weather[0].id;
   let temp = input.main.temp;
+  console.log(id);
   if (icon[icon.length - 1] === "n") {
     return "No, it is dark outside.";
   } else if (icon === "11d") {
     return "No, cuddle up";
   } else if (icon === "01d" || icon === "02d") {
-    if (temp > "18") {
-      return "Yes! Make sure to put sunscreen on";
-    } else if (temp > "27") {
+    if (temp > 27) {
       return "Yes! Who has the waterballoons?";
+    } else if (temp > 18) {
+      return "Yes! Make sure to put sunscreen on";
     } else {
       return "Yes! Don't forget your coat";
     }
-  } else if (id === "500" || id === "300" || id === "301") {
+  } else if (id === 500 || id === 300 || id === 301) {
     return "Yes, they are not made of sugar";
   } else if (icon === "09d" || icon === "10d") {
     return "No, where is that ipad again?";
-  } else if (id === "600") {
+  } else if (id === 600) {
     return "Yes, do you want to build a snowman?";
   } else if (icon === "13d") {
     return "No, let's make some hot coco";
