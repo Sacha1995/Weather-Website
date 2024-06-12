@@ -97,9 +97,9 @@ async function getWeather(latitude, longitude) {
   let todayListLast = todayList[todayList.length - 1];
   todayListLast.classList.add("margin-bottom");
 
-  console.log(picture(result.list));
+  console.log("result list", result.list);
+  console.log("result list first item", result.list[0]);
   //answer and picture
-  console.log("result.lis[0]", result.list[0]);
 
   createHTML(
     "",
@@ -109,8 +109,6 @@ async function getWeather(latitude, longitude) {
     picture(result.list[0]),
     "prepend"
   );
-
-  console.log("result.lis[0]", result.list[0]);
 
   createHTML(
     answer(result.list[0]),
@@ -272,6 +270,8 @@ function answer(input) {
     } else {
       return "Yes! Don't forget your coat";
     }
+  } else if (icon === "03d" || icon === "04d") {
+    return "Yes, off they go!";
   } else if (id === 500 || id === 300 || id === 301) {
     return "Yes, they are not made of sugar";
   } else if (icon === "09d" || icon === "10d") {
@@ -286,7 +286,6 @@ function answer(input) {
 }
 
 function picture(input) {
-  console.log(`this is the input from picture`, input);
   let icon = input.weather[0].icon;
   let id = input.weather[0].id;
   let temp = input.main.temp;
@@ -302,6 +301,8 @@ function picture(input) {
     } else {
       return `./img/yes/${getRandom(1, 23)}.svg`;
     }
+  } else if (icon === "03d" || icon === "04d") {
+    return `./img/yes/${getRandom(1, 23)}.svg`;
   } else if (id === 500 || id === 300 || id === 301) {
     return `./img/rain/${getRandom(1, 2)}.svg`;
   } else if (icon === "09d" || icon === "10d") {
