@@ -115,7 +115,6 @@ async function getWeather(latitude, longitude) {
 
   //filter
   result.list.forEach((item, index) => {
-    // filter2(item, index);
     filter(item, index);
     display = document.getElementsByClassName("display");
     future = document.getElementsByClassName("future");
@@ -188,23 +187,6 @@ function create(item, index) {
   const today = new Date();
   weatherItem = document.getElementById(`weather-item${index}`);
 
-  let futureShow1 = document.querySelector(`.FutureShow1`);
-  let futureShow2 = document.querySelector(`.FutureShow2`);
-  let futureShow3 = document.querySelector(`.FutureShow3`);
-  let futureShow4 = document.querySelector(`.FutureShow4`);
-  let futureShow5 = document.querySelector(`.FutureShow5`);
-  console.log(futureShow4);
-  for (let i = 1; i < 6; i++) {
-    let futureShow = document.querySelector(`.FutureShow${i}`);
-    console.log(futureShow);
-    if (date.getDate() === today.getDate() + i)
-      if (date.getHours() === 12 || date.getHours() == 13) {
-        futureShow.prepend(weatherItem);
-      } else {
-        futureShow.append(weatherItem);
-      }
-  }
-
   createHTML("", weatherItem, `containerFuture${index}`, "div");
   let containerFuture = document.querySelector(`.containerFuture${index}`);
   createHTML(unixToHuman(dt), containerFuture, dt, "h2");
@@ -215,6 +197,7 @@ function create(item, index) {
   createHTML(`Min temp: ${Math.round(temp_min)} °C`, statsContainer, "minTemp");
   createHTML(`Windspeed: ${Math.round(wind.speed)}`, statsContainer, "wind");
   let windElement = document.getElementsByClassName("wind");
+  console.log(windElement);
   createHTML("", windElement[index], "arrow", "img", "./img/up-arrow.svg");
   createHTML(weather[0].description.capitalize(), statsContainer, "clouds");
   createHTML("", containerFuture, `iconContainer${index}`, "div");
@@ -222,6 +205,21 @@ function create(item, index) {
   iconContainer.classList.add("iconContainer");
   createHTML(shortAnswer(item), iconContainer, "shortAnswer");
   createHTML("", iconContainer, "image", "img", icon);
+
+  let futureShow1 = document.querySelector(`.FutureShow1`);
+  let futureShow2 = document.querySelector(`.FutureShow2`);
+  let futureShow3 = document.querySelector(`.FutureShow3`);
+  let futureShow4 = document.querySelector(`.FutureShow4`);
+  let futureShow5 = document.querySelector(`.FutureShow5`);
+  for (let i = 1; i < 6; i++) {
+    let futureShow = document.querySelector(`.FutureShow${i}`);
+    if (date.getDate() === today.getDate() + i)
+      if (date.getHours() === 12 || date.getHours() == 13) {
+        futureShow.prepend(weatherItem);
+      } else {
+        futureShow.append(weatherItem);
+      }
+  }
 }
 
 // get day and change date
