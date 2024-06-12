@@ -157,8 +157,16 @@ main>p {
   height: 60px;
 }
 
+.arrow {
+  display: inline-block;
+  height: 20px;
+  margin-bottom: -5px;
+  margin-left: 5px;
+  border-radius: 90px;
+}
+
 .containerWeather .margin-bottom {
-  margin-bottom: 20px;
+  margin-bottom: 15px;
 }
 
 .containerWeather>div>div,

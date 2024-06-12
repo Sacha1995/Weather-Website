@@ -84,6 +84,7 @@ async function getWeather(latitude, longitude) {
     filter(item, index);
     display = document.getElementsByClassName("display");
     future = document.getElementsByClassName("future");
+    customArrow(item.wind.deg, item.wind.speed, index);
   });
 
   let displayArr = Array.from(display);
@@ -173,6 +174,8 @@ function create(item, index) {
   createHTML(`Max temp: ${Math.round(temp_max)} °C`, statsContainer, "maxTemp");
   createHTML(`Min temp: ${Math.round(temp_min)} °C`, statsContainer, "minTemp");
   createHTML(`Windspeed: ${Math.round(wind.speed)}`, statsContainer, "wind");
+  let windElement = document.getElementsByClassName("wind");
+  createHTML("", windElement[index], "arrow", "img", "./img/up-arrow.svg");
   createHTML(weather[0].description.capitalize(), statsContainer, "clouds");
   createHTML("", containerFuture, `iconContainer${index}`, "div");
   let iconContainer = document.querySelector(`.iconContainer${index}`);
@@ -368,17 +371,28 @@ function comeDown(item, hiddenItem) {
   });
 }
 
-// displayArr.forEach((item) => {
-//   comeDown(item, result.list);
-// });
-
-// const animationIntervalGameHard = btnPlayHard.addEventListener(
-//   "click",
-//   (e) => {
-//     clearAnimation();
-//     turnOff();
-//     stopLight.classList.add("on");
-//     endTimer = setInterval(animationGameHard, 500);
-//     pedestrian.classList.remove("moveLeft");
-//   }
-// );
+//Arrow
+function customArrow(deg, speed, index) {
+  let arrow = document.getElementsByClassName("arrow");
+  speed = Math.round(speed);
+  if (speed === 0 || speed === 1) {
+    arrow[index].style.backgroundColor = "lightblue";
+  } else if (speed === 2 || speed === 3 || speed === 4) {
+    arrow[index].style.backgroundColor = "blue";
+  } else if (speed === 5 || speed === 6) {
+    arrow[index].style.backgroundColor = "green";
+  } else if (speed === 7 || speed === 8) {
+    arrow[index].style.backgroundColor = "yellow";
+  } else if (speed === 9 || speed === 10) {
+    arrow[index].style.backgroundColor = "orange";
+  } else if (speed === 11) {
+    arrow[index].style.backgroundColor = "red";
+  } else if (speed === 12) {
+    arrow[index].style.backgroundColor = "purple";
+  } else {
+    arrow[index].style.backgroundColor = "white";
+  }
+  console.log(deg);
+  arrow[index].style.width = `${deg}`;
+  arrow[index].style.transform = `rotate(${deg} deg)`;
+}
