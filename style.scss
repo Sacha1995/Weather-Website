@@ -34,6 +34,7 @@ $lightPink: rgba(241, 195, 193, 0.4);
   font-family: $normalFont;
   margin: 0px;
   padding: 0px;
+  scroll-behavior: smooth;
 }
 
 body {
@@ -62,11 +63,11 @@ p {
   line-height: 20px;
 }
 
-.containerWeather>.containerBottom>div>.off {
+.containerWeather>.containerBottom>div>div>.off {
   display: none;
 }
 
-.containerWeather>.containerBottom>div>.on {
+.containerWeather>.containerBottom>div>div>.on {
   display: block;
   transform: scale(1, 1);
   animation: scale 0.5s;
@@ -406,26 +407,12 @@ footer {
     flex-basis: 33%
   }
 
-  .containerBottom>div>.display>div {
+  .containerBottom>div>.display>div,
+  .containerBottom>div>div>.future>div {
     grid-template-columns: fit-content(170px);
     justify-content: center;
     align-content: center;
   }
-
-  // .display {
-  //   position: relative;
-  // }
-
-  .containerWeather>.containerBottom>div>.on {
-    min-width: 250px;
-  }
-
-
-  // .containerBottom>div>div>div {
-  //   grid-template-columns: fit-content(170px);
-  //   justify-content: center;
-  //   align-content: center;
-  // }
 
   .display>div h2 {
     grid-row-start: 2;
@@ -433,18 +420,27 @@ footer {
     grid-column-end: 2;
   }
 
-  .display {
-    margin: 0px -3px -3px -3px;
-
+  .on>div h2 {
+    font-size: 16px;
   }
 
-  .display>.div {
+  .display {
+    margin: 0px -3px -3px -3px;
+  }
+
+  .future>.div {
     max-width: none;
   }
 
   .display .iconContainer {
     grid-row-start: 1;
     grid-row-end: 2;
+    justify-self: center;
+  }
+
+  .on .iconContainer {
+    grid-row-start: 3;
+    grid-row-end: 4;
     justify-self: center;
   }
 
@@ -459,8 +455,26 @@ footer {
     flex-basis: 0%
   }
 
+  .display {
+    position: relative;
+  }
+
+  .containerSlideDown {
+    display: flex;
+    flex-wrap: wrap;
+    flex-basis: 20%;
+    position: absolute;
+    z-index: 2;
+    bottom: 317px;
+    left: 158px;
+  }
+
+  .containerWeather>.containerBottom>div>div>.on {
+    margin: 0px -2px -4px -4px;
+  }
+
   .main {
-    padding: 50px;
+    padding: 50px 50px 100px 50px;
   }
 
   .containerIntro {

@@ -74,7 +74,7 @@ async function getWeather(latitude, longitude) {
     "./img/weather-icons/017-sunrise.svg"
   );
 
-  // containers for styling
+  // containers for styling --- not very well done, could definitely be shorter....
   createHTML("", containerWeather, "containerTop", "div", "", "prepend");
   const containerTop = document.querySelector(".containerTop");
   createHTML("", containerTop, "containerAnswer", "div");
@@ -88,6 +88,16 @@ async function getWeather(latitude, longitude) {
   createHTML("", containerBottom, `FutureShow3`, "div");
   createHTML("", containerBottom, `FutureShow4`, "div");
   createHTML("", containerBottom, `FutureShow5`, "div");
+  let futureShow1 = document.querySelector(`.FutureShow1`);
+  let futureShow2 = document.querySelector(`.FutureShow2`);
+  let futureShow3 = document.querySelector(`.FutureShow3`);
+  let futureShow4 = document.querySelector(`.FutureShow4`);
+  let futureShow5 = document.querySelector(`.FutureShow5`);
+  createHTML("", futureShow1, "containerSlideDown1", "div");
+  createHTML("", futureShow2, "containerSlideDown2", "div");
+  createHTML("", futureShow3, "containerSlideDown3", "div");
+  createHTML("", futureShow4, "containerSlideDown4", "div");
+  createHTML("", futureShow5, "containerSlideDown5", "div");
 
   // goes through the API info
   result.list.forEach((item, index) => {
@@ -131,9 +141,6 @@ async function getWeather(latitude, longitude) {
   let todayList = document.querySelectorAll(".today");
   let todayListLast = todayList[todayList.length - 1];
   todayListLast.classList.add("margin-bottom");
-
-  console.log("result list", result.list);
-  console.log("result list first item", result.list[0]);
 }
 
 //turn it in html
@@ -197,7 +204,6 @@ function create(item, index) {
   createHTML(`Min temp: ${Math.round(temp_min)} °C`, statsContainer, "minTemp");
   createHTML(`Windspeed: ${Math.round(wind.speed)}`, statsContainer, "wind");
   let windElement = document.getElementsByClassName("wind");
-  console.log(windElement);
   createHTML("", windElement[index], "arrow", "img", "./img/up-arrow.svg");
   createHTML(weather[0].description.capitalize(), statsContainer, "clouds");
   createHTML("", containerFuture, `iconContainer${index}`, "div");
@@ -206,18 +212,15 @@ function create(item, index) {
   createHTML(shortAnswer(item), iconContainer, "shortAnswer");
   createHTML("", iconContainer, "image", "img", icon);
 
-  let futureShow1 = document.querySelector(`.FutureShow1`);
-  let futureShow2 = document.querySelector(`.FutureShow2`);
-  let futureShow3 = document.querySelector(`.FutureShow3`);
-  let futureShow4 = document.querySelector(`.FutureShow4`);
-  let futureShow5 = document.querySelector(`.FutureShow5`);
   for (let i = 1; i < 6; i++) {
     let futureShow = document.querySelector(`.FutureShow${i}`);
+    let containerSlideDown = document.querySelector(`.containerSlideDown${i}`);
+    containerSlideDown.classList.add("containerSlideDown");
     if (date.getDate() === today.getDate() + i)
       if (date.getHours() === 12 || date.getHours() == 13) {
         futureShow.prepend(weatherItem);
       } else {
-        futureShow.append(weatherItem);
+        containerSlideDown.append(weatherItem);
       }
   }
 }
@@ -385,13 +388,8 @@ function shortAnswer(item) {
 }
 
 //comedown
-function showItem() {
-  const item = document.querySelector(".future");
-  console.log("something");
-  item.toggleAttribute("hidden");
-}
-
 function comeDown(item, hiddenItem) {
+  console.log(hiddenItem);
   item.addEventListener("click", (e) => {
     hiddenItem.forEach((item2) => {
       let unix = item.querySelector("h2").className;
@@ -406,6 +404,9 @@ function comeDown(item, hiddenItem) {
           item2.classList.remove("on");
           item2.classList.add("off");
         }
+      } else if (item2.classList.contains("on")) {
+        item2.classList.remove("on");
+        item2.classList.add("off");
       }
     });
   });
