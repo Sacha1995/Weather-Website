@@ -57,12 +57,12 @@ async function getWeather(latitude, longitude) {
     "sunQuestion"
   );
   createHTML(
-    `Sunrise today is at ${dayjs(result.city.sunrise).format("hh:mmA")}`,
+    `Sunrise today is at ${dayjs(result.city.sunrise * 1000).format("hh:mmA")}`,
     containerSun,
     "sunrise"
   );
   createHTML(
-    `Sunset today is at ${dayjs(result.city.sunset).format("hh:mmA")}`,
+    `Sunset today is at ${dayjs(result.city.sunset * 1000).format("hh:mmA")}`,
     containerSun,
     "sunset"
   );
@@ -376,23 +376,22 @@ function customArrow(deg, speed, index) {
   let arrow = document.getElementsByClassName("arrow");
   speed = Math.round(speed);
   if (speed === 0 || speed === 1) {
-    arrow[index].style.backgroundColor = "lightblue";
+    arrow[index].style.backgroundColor = "rgba(183, 231, 252, 1)";
   } else if (speed === 2 || speed === 3 || speed === 4) {
-    arrow[index].style.backgroundColor = "blue";
+    arrow[index].style.backgroundColor = "rgba(133, 188, 239, 1)";
   } else if (speed === 5 || speed === 6) {
-    arrow[index].style.backgroundColor = "green";
+    arrow[index].style.backgroundColor = "rgba(169, 243, 167, 1)";
   } else if (speed === 7 || speed === 8) {
-    arrow[index].style.backgroundColor = "yellow";
+    arrow[index].style.backgroundColor = "rgba(248, 255, 172, 1)";
   } else if (speed === 9 || speed === 10) {
-    arrow[index].style.backgroundColor = "orange";
+    arrow[index].style.backgroundColor = "rgba(251, 189, 99, 1)";
   } else if (speed === 11) {
-    arrow[index].style.backgroundColor = "red";
+    arrow[index].style.backgroundColor = "rgba(244, 150, 130, 1)";
   } else if (speed === 12) {
-    arrow[index].style.backgroundColor = "purple";
+    arrow[index].style.backgroundColor = "rgba(180, 130, 244, 1)";
   } else {
     arrow[index].style.backgroundColor = "white";
   }
-  console.log(deg);
-  arrow[index].style.width = `${deg}`;
-  arrow[index].style.transform = `rotate(${deg} deg)`;
+  // arrow[index].style.transform = "rotate(" + 90 + " deg)"; this one does not work?
+  arrow[index].style.webkitTransform = "rotate(" + deg + "deg)";
 }
