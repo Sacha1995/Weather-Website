@@ -74,19 +74,27 @@ async function getWeather(latitude, longitude) {
     "./img/weather-icons/017-sunrise.svg"
   );
 
-  // goes through the API info
-  result.list.forEach((item, index) => {
-    create(item, index);
-  });
-
-  //answer and picture
+  // containers for styling
   createHTML("", containerWeather, "containerTop", "div", "", "prepend");
   const containerTop = document.querySelector(".containerTop");
   createHTML("", containerTop, "containerAnswer", "div");
   const containerAnswer = document.querySelector(".containerAnswer");
   createHTML("", containerTop, "containerToday", "div");
   const containerToday = document.querySelector(".containerToday");
+  createHTML("", containerWeather, "containerBottom", "div");
+  const containerBottom = document.querySelector(".containerBottom");
+  createHTML("", containerBottom, `FutureShow1`, "div");
+  createHTML("", containerBottom, `FutureShow2`, "div");
+  createHTML("", containerBottom, `FutureShow3`, "div");
+  createHTML("", containerBottom, `FutureShow4`, "div");
+  createHTML("", containerBottom, `FutureShow5`, "div");
 
+  // goes through the API info
+  result.list.forEach((item, index) => {
+    create(item, index);
+  });
+
+  //answer and picture
   createHTML(
     "",
     containerAnswer,
@@ -107,6 +115,7 @@ async function getWeather(latitude, longitude) {
 
   //filter
   result.list.forEach((item, index) => {
+    // filter2(item, index);
     filter(item, index);
     display = document.getElementsByClassName("display");
     future = document.getElementsByClassName("future");
@@ -166,11 +175,35 @@ function create(item, index) {
   //create div container - tried to use createHTML() did not work...
   let weatherItem = document.createElement("div");
   weatherItem.id = `weather-item${index}`;
-  containerWeather.append(weatherItem);
+  let containerBottom = document.querySelector(".containerBottom");
+  containerBottom.append(weatherItem);
   //creating content
   const { dt, wind, weather } = item;
   const { temp_max, temp_min, temp } = item.main;
   icon = weather[0].icon;
+
+  // //filter try two
+
+  const date = new Date(item.dt * 1000);
+  const today = new Date();
+  weatherItem = document.getElementById(`weather-item${index}`);
+
+  let futureShow1 = document.querySelector(`.FutureShow1`);
+  let futureShow2 = document.querySelector(`.FutureShow2`);
+  let futureShow3 = document.querySelector(`.FutureShow3`);
+  let futureShow4 = document.querySelector(`.FutureShow4`);
+  let futureShow5 = document.querySelector(`.FutureShow5`);
+  console.log(futureShow4);
+  for (let i = 1; i < 6; i++) {
+    let futureShow = document.querySelector(`.FutureShow${i}`);
+    console.log(futureShow);
+    if (date.getDate() === today.getDate() + i)
+      if (date.getHours() === 12 || date.getHours() == 13) {
+        futureShow.prepend(weatherItem);
+      } else {
+        futureShow.append(weatherItem);
+      }
+  }
 
   createHTML("", weatherItem, `containerFuture${index}`, "div");
   let containerFuture = document.querySelector(`.containerFuture${index}`);

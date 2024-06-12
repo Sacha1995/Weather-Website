@@ -44,11 +44,11 @@ p {
   line-height: 20px;
 }
 
-main > .containerWeather > .off {
+.containerWeather > .containerBottom > div > .off {
   display: none;
 }
 
-main > .containerWeather > .on {
+.containerWeather > .containerBottom > div > .on {
   display: block;
 }
 
