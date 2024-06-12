@@ -97,7 +97,10 @@ async function getWeather(latitude, longitude) {
   let todayListLast = todayList[todayList.length - 1];
   todayListLast.classList.add("margin-bottom");
 
+  console.log(picture(result.list));
   //answer and picture
+  console.log("result.lis[0]", result.list[0]);
+
   createHTML(
     "",
     containerWeather,
@@ -106,6 +109,8 @@ async function getWeather(latitude, longitude) {
     picture(result.list[0]),
     "prepend"
   );
+
+  console.log("result.lis[0]", result.list[0]);
 
   createHTML(
     answer(result.list[0]),
@@ -281,6 +286,7 @@ function answer(input) {
 }
 
 function picture(input) {
+  console.log(`this is the input from picture`, input);
   let icon = input.weather[0].icon;
   let id = input.weather[0].id;
   let temp = input.main.temp;
