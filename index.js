@@ -79,6 +79,32 @@ async function getWeather(latitude, longitude) {
     create(item, index);
   });
 
+  //answer and picture
+  createHTML("", containerWeather, "containerTop", "div", "", "prepend");
+  const containerTop = document.querySelector(".containerTop");
+  createHTML("", containerTop, "containerAnswer", "div");
+  const containerAnswer = document.querySelector(".containerAnswer");
+  createHTML("", containerTop, "containerToday", "div");
+  const containerToday = document.querySelector(".containerToday");
+
+  createHTML(
+    "",
+    containerAnswer,
+    "changingImage",
+    "img",
+    picture(result.list[0]),
+    "prepend"
+  );
+
+  createHTML(
+    answer(result.list[0]),
+    containerAnswer,
+    "answer",
+    "p",
+    "",
+    "prepend"
+  );
+
   //filter
   result.list.forEach((item, index) => {
     filter(item, index);
@@ -100,25 +126,6 @@ async function getWeather(latitude, longitude) {
 
   console.log("result list", result.list);
   console.log("result list first item", result.list[0]);
-  //answer and picture
-
-  createHTML(
-    "",
-    containerWeather,
-    "changingImage",
-    "img",
-    picture(result.list[0]),
-    "prepend"
-  );
-
-  createHTML(
-    answer(result.list[0]),
-    containerWeather,
-    "answer",
-    "p",
-    "",
-    "prepend"
-  );
 }
 
 //turn it in html
@@ -239,6 +246,7 @@ function filter(item, index) {
   const date = new Date(item.dt * 1000);
   const today = new Date();
   let weatherItem = document.getElementById(`weather-item${index}`);
+  let containerToday = document.querySelector(".containerToday");
   if (date.getDate() !== today.getDate()) {
     weatherItem.classList.add("off");
   }
@@ -251,6 +259,7 @@ function filter(item, index) {
   }
   if (date.getDate() === today.getDate()) {
     weatherItem.classList.add("today");
+    containerToday.append(weatherItem);
   } else {
     weatherItem.classList.add("future");
   }

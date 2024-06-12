@@ -156,7 +156,7 @@ main > p {
   margin-bottom: 15px;
 }
 
-.containerWeather > div > div,
+.containerToday > div > div,
 .future > div {
   display: grid;
   grid-template-columns: 2.5fr 1fr;
@@ -165,14 +165,14 @@ main > p {
   margin: 0px auto 0px auto;
   justify-content: center;
 }
-.containerWeather > div > div h2,
+.containerToday > div > div h2,
 .future > div h2 {
   grid-row: 1;
   grid-column-start: 1;
   grid-column-end: 3;
   margin-bottom: 5px;
 }
-.containerWeather > div > div .iconContainer,
+.containerToday > div > div .iconContainer,
 .future > div .iconContainer {
   align-self: center;
 }
@@ -304,6 +304,21 @@ footer p {
   h1,
   .answer {
     font-size: 44px;
+  }
+}
+@media (min-width: 800px) {
+  .containerTop {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr;
+    margin: 10px 10px 0px 10px;
+    justify-items: center;
+    align-items: center;
+    max-width: 860px;
+  }
+  h1,
+  .answer {
+    font-size: 36px;
   }
 }
 /*
