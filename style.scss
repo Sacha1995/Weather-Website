@@ -115,7 +115,6 @@ p {
   cursor: pointer;
   background-color: $pink;
   transition: background-color 0.5s;
-
 }
 
 .searchBar {
@@ -244,6 +243,12 @@ main>p {
   cursor: pointer;
   margin: 0px -3px -3px -3px;
   max-width: none;
+  transition: background-color 0.5s;
+}
+
+.display:hover {
+  background-color: $lightOrange;
+  transition: background-color 0.5s;
 }
 
 .shortAnswer {
@@ -519,7 +524,7 @@ footer {
   }
 
   .display {
-    margin: 0px -3px -3px -3px;
+    margin: 0px -2px -3px -1px;
     position: relative;
   }
 

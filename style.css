@@ -226,6 +226,12 @@ main > p {
   cursor: pointer;
   margin: 0px -3px -3px -3px;
   max-width: none;
+  transition: background-color 0.5s;
+}
+
+.display:hover {
+  background-color: rgba(251, 194, 102, 0.17);
+  transition: background-color 0.5s;
 }
 
 .shortAnswer {
@@ -461,7 +467,7 @@ footer p {
     grid-column-end: 2;
   }
   .display {
-    margin: 0px -3px -3px -3px;
+    margin: 0px -2px -3px -1px;
     position: relative;
   }
   .future > .div {
