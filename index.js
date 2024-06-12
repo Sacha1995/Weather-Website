@@ -199,7 +199,7 @@ function create(item, index) {
   createHTML(unixToHuman(dt), containerFuture, dt, "h2");
   createHTML("", containerFuture, `statsContainer${index}`, "div");
   let statsContainer = document.querySelector(`.statsContainer${index}`);
-  createHTML(`Temperature: ${Math.round(temp)} °C`, statsContainer, "temp");
+  createHTML(`Temp: ${Math.round(temp)} °C`, statsContainer, "temp");
   createHTML(`Max temp: ${Math.round(temp_max)} °C`, statsContainer, "maxTemp");
   createHTML(`Min temp: ${Math.round(temp_min)} °C`, statsContainer, "minTemp");
   createHTML(`Windspeed: ${Math.round(wind.speed)}`, statsContainer, "wind");
@@ -234,6 +234,9 @@ function unixToHuman(UnixTime) {
     (d.getHours() === 12 || d.getHours() == 13)
   ) {
     let day = dayjs(d).format("ddd MMMM D");
+    return day;
+  } else if (d.getDate() !== today.getDate()) {
+    let day = dayjs(d).format("ddd MMM D, hh:mmA");
     return day;
   } else {
     let day = dayjs(d).format("ddd MMMM D, hh:mmA");
@@ -389,7 +392,6 @@ function shortAnswer(item) {
 
 //comedown
 function comeDown(item, hiddenItem) {
-  console.log(hiddenItem);
   item.addEventListener("click", (e) => {
     hiddenItem.forEach((item2) => {
       let unix = item.querySelector("h2").className;
@@ -436,3 +438,9 @@ function customArrow(deg, speed, index) {
   // arrow[index].style.transform = "rotate(" + 90 + " deg)"; this one does not work?
   arrow[index].style.webkitTransform = "rotate(" + deg + "deg)";
 }
+
+//viewport height
+let viewportHeight = window.innerHeight;
+console.log(viewportHeight);
+let viewportWidth = window.innerWidth;
+console.log(viewportWidth);

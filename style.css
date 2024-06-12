@@ -33,10 +33,6 @@ body {
   grid-template-rows: 1fr fit-content(50px);
 }
 
-.main {
-  padding: 10px;
-}
-
 h1,
 h2,
 h3,
@@ -239,6 +235,10 @@ main > p {
   font-size: 20px;
 }
 
+.containerWeather > .containerBottom > div > div > .on:last-child {
+  margin-bottom: 10px;
+}
+
 /*
 ************END***********
 */
@@ -249,7 +249,7 @@ main > p {
 */
 .containerSun {
   background: linear-gradient(90deg, rgb(251, 189, 99) 0%, rgb(240, 194, 194) 50%, rgb(192, 171, 212) 100%);
-  margin: 20px -10px -10px -10px;
+  margin: 20px -10px 0px -10px;
   padding: 10px;
   display: grid;
   grid-template-columns: fit-content(400px) fit-content(400px);
@@ -335,6 +335,64 @@ footer p {
   .answer {
     font-size: 44px;
   }
+  .containerBottom > div > div > .future > div {
+    grid-template-columns: fit-content(170px);
+    justify-content: center;
+    align-content: center;
+    gap: 5px 0px;
+  }
+  .future > div h2 {
+    grid-row: 1;
+    grid-column-start: 1;
+    grid-column-end: 3;
+    margin-bottom: 5px;
+  }
+  .on .iconContainer {
+    grid-row-start: 3;
+    grid-row-end: 4;
+    justify-self: center;
+  }
+  .on > div h2 {
+    font-size: 16px;
+    margin-bottom: 0px;
+  }
+  .containerSlideDown {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  .containerWeather > .containerBottom > div > div > .on {
+    max-width: none;
+    flex-basis: 26%;
+    margin: 1px -2px -4px -2px;
+    animation: slideDown 0.5s ease-in-out;
+  }
+  @keyframes slideDown {
+    0% {
+      opacity: 0;
+      transform: translateY(-10px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0px);
+    }
+  }
+  @keyframes slideUp {
+    0% {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0px);
+    }
+  }
+  .containerWeather > .containerBottom > div > div > .on:last-child {
+    margin: 1px -2px 10px -2px;
+  }
+  .containerWeather > .containerBottom > .FutureShow5 > .containerSlideDown > .on:last-child {
+    margin: 1px -2px -4px -2px;
+  }
 }
 @media (min-width: 800px) {
   .containerTop {
@@ -347,13 +405,33 @@ footer p {
     max-width: 860px;
   }
   .main {
-    padding: 30px;
+    padding: 30px 30px 30px 30px;
   }
   .containerIntro {
     padding: 10px 30px;
   }
   .containerSun {
     margin: 20px -30px -30px -30px;
+  }
+  .containerSlideDown {
+    position: absolute;
+    z-index: 2;
+    left: 0;
+  }
+  .containerSlideDown4,
+  .containerSlideDown5 {
+    position: absolute;
+    z-index: 2;
+    left: 0;
+    bottom: 248px;
+    flex-wrap: wrap-reverse;
+  }
+  .containerSlideDown4 .on,
+  .containerSlideDown5 .on {
+    animation: slideUp 0.5s ease-in-out !important;
+  }
+  .containerSlideDown5 {
+    right: 0px;
   }
   h1,
   .answer {
@@ -363,30 +441,41 @@ footer p {
     display: flex;
     width: 100%;
     flex-wrap: wrap;
+    position: relative;
   }
   .containerBottom > div {
     flex-grow: 1;
     flex-basis: 33%;
   }
-  .containerBottom > div > .display > div,
-  .containerBottom > div > div > .future > div {
+  .containerBottom > div > .display > div {
     grid-template-columns: fit-content(170px);
     justify-content: center;
     align-content: center;
+  }
+  .containerWeather > .containerBottom > .FutureShow5 > .containerSlideDown {
+    margin-bottom: 0px;
   }
   .display > div h2 {
     grid-row-start: 2;
     grid-row-end: 3;
     grid-column-end: 2;
   }
-  .on > div h2 {
-    font-size: 16px;
-  }
   .display {
     margin: 0px -3px -3px -3px;
+    position: relative;
   }
   .future > .div {
     max-width: none;
+  }
+  .containerWeather {
+    margin-bottom: 60px;
+  }
+  .containerWeather > .containerBottom > div > div > .on {
+    flex-basis: 20%;
+    padding: 10px 10px 0px 10px;
+  }
+  .containerWeather > .containerBottom > div > div > .on:last-child {
+    margin: 1px -2px -4px -2px;
   }
   .display .iconContainer {
     grid-row-start: 1;
@@ -401,25 +490,49 @@ footer p {
   .intro {
     margin-bottom: 5px;
   }
+  .containerSun {
+    background: none;
+    border: none;
+    position: absolute;
+    top: 0;
+    right: 0px;
+    margin: 3px 10px 0px 0px;
+    padding: 0px;
+  }
 }
-@media (min-width: 1060px) {
+@media (min-width: 910px) {
+  .containerSun {
+    margin: 3px 20px 0px 0px;
+  }
+}
+@media (min-width: 1290px) {
   .containerBottom > div {
     flex-basis: 0%;
-  }
-  .display {
-    position: relative;
   }
   .containerSlideDown {
     display: flex;
     flex-wrap: wrap;
-    flex-basis: 20%;
-    position: absolute;
     z-index: 2;
-    bottom: 317px;
-    left: 158px;
+    bottom: 248px;
+    left: 1px;
+    max-width: 1370px;
+    width: 100%;
   }
   .containerWeather > .containerBottom > div > div > .on {
     margin: 0px -2px -4px -4px;
+    flex-basis: 10%;
+    flex-grow: 1;
+    animation: slideUp 0.5s ease-in-out;
+  }
+  @keyframes slideUp {
+    0% {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0px);
+    }
   }
   .main {
     padding: 50px 50px 100px 50px;
@@ -440,13 +553,7 @@ footer p {
     margin: 0px auto 0px auto;
   }
   .containerSun {
-    background: none;
-    border: none;
-    position: absolute;
-    top: 0;
-    right: 0px;
     margin: 3px 50px 0px 0px;
-    padding: 0px;
   }
 }
 @media (min-width: 1470px) {
