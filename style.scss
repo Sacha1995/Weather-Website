@@ -61,6 +61,19 @@ p {
 
 .containerWeather>.containerBottom>div>.on {
   display: block;
+  transform: scale(1, 1);
+  animation: scale 0.5s;
+}
+
+@keyframes scale {
+  0% {
+    transform: scale(0.9, 0.7);
+  }
+
+  100% {
+    transform: scale(1, 1);
+
+  }
 }
 
 /*
@@ -81,11 +94,20 @@ p {
   letter-spacing: 2px;
   box-shadow: 0px 0px 3px $purple;
   border-radius: 3px;
+  transition: background-color 0.5s;
 }
 
-.searchBtn:hover {
+.searchBar {
+  padding: 1px;
+  padding-left: 5px;
+}
+
+.searchBtn:hover,
+.searchBtn:focus {
   cursor: pointer;
   background-color: $pink;
+  transition: background-color 0.5s;
+
 }
 
 .searchBar {
