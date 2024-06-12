@@ -146,7 +146,6 @@ main > p {
 */
 .containerWeather {
   background-color: rgba(251, 194, 102, 0.17);
-  border: rgb(251, 189, 99) solid 5px;
 }
 
 .answer {
@@ -429,7 +428,7 @@ footer p {
     position: absolute;
     z-index: 2;
     left: 0;
-    bottom: 248px;
+    bottom: 254px;
     flex-wrap: wrap-reverse;
   }
   .containerSlideDown4 .on,
@@ -457,21 +456,19 @@ footer p {
     grid-template-columns: fit-content(170px);
     justify-content: center;
     align-content: center;
+    gap: 5px 0px;
   }
   .containerWeather > .containerBottom > .FutureShow5 > .containerSlideDown {
     margin-bottom: 0px;
   }
   .display > div h2 {
-    grid-row-start: 2;
     grid-row-end: 3;
     grid-column-end: 2;
+    margin-bottom: 0px;
   }
   .display {
     margin: 0px -2px -3px -1px;
     position: relative;
-  }
-  .future > .div {
-    max-width: none;
   }
   .containerWeather {
     margin-bottom: 60px;
@@ -484,8 +481,6 @@ footer p {
     margin: 1px -2px -4px -2px;
   }
   .display .iconContainer {
-    grid-row-start: 1;
-    grid-row-end: 2;
     justify-self: center;
   }
   .on .iconContainer {
@@ -511,6 +506,36 @@ footer p {
     margin: 3px 20px 0px 0px;
   }
 }
+@media (min-width: 1000px) {
+  .containerBottom > div > .display > div {
+    display: grid;
+    grid-template-columns: 2.5fr 1fr;
+    grid-template-rows: fit-content(100px) 1fr;
+    max-width: 214px;
+    margin: 0px auto 0px auto;
+    justify-content: center;
+  }
+  .future > div h2 {
+    grid-row: 1;
+    grid-column-start: 1;
+    grid-column-end: 3;
+  }
+  .display .iconContainer {
+    grid-row-start: 2;
+    grid-row-end: 3;
+    grid-column: 2;
+  }
+  .display > div h2 {
+    grid-row-start: 1;
+    grid-row-end: 2;
+    grid-column-start: 1;
+    grid-column-end: 3;
+  }
+  .containerSlideDown4,
+  .containerSlideDown5 {
+    bottom: 162px;
+  }
+}
 @media (min-width: 1290px) {
   .containerBottom > div {
     flex-basis: 0%;
@@ -519,7 +544,7 @@ footer p {
     display: flex;
     flex-wrap: wrap;
     z-index: 2;
-    bottom: 248px;
+    bottom: 254px;
     left: 1px;
     max-width: 1370px;
     width: 100%;
@@ -545,6 +570,17 @@ footer p {
   }
   .containerIntro {
     padding: 10px 50px;
+  }
+  .display .iconContainer {
+    grid-row-start: 3;
+    grid-row-end: 4;
+    grid-column: 1;
+  }
+  .containerBottom > div > .display > div {
+    grid-template-columns: fit-content(170px);
+    justify-content: center;
+    align-content: center;
+    gap: 5px 0px;
   }
   footer {
     border: none;

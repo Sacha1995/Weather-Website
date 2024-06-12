@@ -162,7 +162,7 @@ main>p {
 */
 .containerWeather {
   background-color: $lightOrange;
-  border: $orange solid 5px;
+  // border: $orange solid 5px;
 }
 
 .answer {
@@ -477,7 +477,7 @@ footer {
     position: absolute;
     z-index: 2;
     left: 0;
-    bottom: 248px;
+    bottom: 254px;
     flex-wrap: wrap-reverse;
 
     .on {
@@ -511,6 +511,7 @@ footer {
     grid-template-columns: fit-content(170px);
     justify-content: center;
     align-content: center;
+    gap: 5px 0px;
   }
 
   .containerWeather>.containerBottom>.FutureShow5>.containerSlideDown {
@@ -518,18 +519,14 @@ footer {
   }
 
   .display>div h2 {
-    grid-row-start: 2;
     grid-row-end: 3;
     grid-column-end: 2;
+    margin-bottom: 0px;
   }
 
   .display {
     margin: 0px -2px -3px -1px;
     position: relative;
-  }
-
-  .future>.div {
-    max-width: none;
   }
 
   .containerWeather {
@@ -546,8 +543,6 @@ footer {
   }
 
   .display .iconContainer {
-    grid-row-start: 1;
-    grid-row-end: 2;
     justify-self: center;
   }
 
@@ -578,6 +573,41 @@ footer {
   }
 }
 
+@media (min-width: 1000px) {
+  .containerBottom>div>.display>div {
+    display: grid;
+    grid-template-columns: 2.5fr 1fr;
+    grid-template-rows: fit-content(100px) 1fr;
+    max-width: 214px;
+    margin: 0px auto 0px auto;
+    justify-content: center;
+  }
+
+  .future>div h2 {
+    grid-row: 1;
+    grid-column-start: 1;
+    grid-column-end: 3;
+  }
+
+  .display .iconContainer {
+    grid-row-start: 2;
+    grid-row-end: 3;
+    grid-column: 2;
+  }
+
+  .display>div h2 {
+    grid-row-start: 1;
+    grid-row-end: 2;
+    grid-column-start: 1;
+    grid-column-end: 3;
+  }
+
+  .containerSlideDown4,
+  .containerSlideDown5 {
+    bottom: 162px;
+  }
+}
+
 @media (min-width: 1290px) {
   .containerBottom>div {
     flex-basis: 0%
@@ -587,7 +617,7 @@ footer {
     display: flex;
     flex-wrap: wrap;
     z-index: 2;
-    bottom: 248px;
+    bottom: 254px;
     left: 1px;
     max-width: 1370px;
     width: 100%;
@@ -618,6 +648,19 @@ footer {
 
   .containerIntro {
     padding: 10px 50px;
+  }
+
+  .display .iconContainer {
+    grid-row-start: 3;
+    grid-row-end: 4;
+    grid-column: 1;
+  }
+
+  .containerBottom>div>.display>div {
+    grid-template-columns: fit-content(170px);
+    justify-content: center;
+    align-content: center;
+    gap: 5px 0px;
   }
 
   footer {

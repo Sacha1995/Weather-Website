@@ -194,6 +194,9 @@ function create(item, index) {
   const today = new Date();
   weatherItem = document.getElementById(`weather-item${index}`);
 
+  const containerWeather = document.querySelector(".containerWeather");
+  containerWeather.style.border = "rgb(251, 189, 99) solid 5px";
+
   createHTML("", weatherItem, `containerFuture${index}`, "div");
   let containerFuture = document.querySelector(`.containerFuture${index}`);
   createHTML(unixToHuman(dt), containerFuture, dt, "h2");
@@ -269,13 +272,18 @@ searchBtn.addEventListener("click", (e) => {
 
 async function getSearchAPI(city) {
   let searchURL = `http://api.openweathermap.org/geo/1.0/direct?q=${city},&limit=5&appid=c9c04097e886eeff6e86ac740354f877`;
-  console.log(searchURL);
   let result = await fetch(searchURL);
   result = await result.json();
-  containerWeather.innerHTML = "";
-  title.innerHTML = "";
-  intro.innerHTML = "";
+  const containerWeather = document.querySelector(".containerWeather");
+  const containerSun = document.querySelector(".containerSun");
+  if (containerWeather.innerHTML) {
+    containerWeather.innerHTML = "";
+    title.innerHTML = "";
+    intro.innerHTML = "";
+    containerSun.innerHTML = "";
+  }
   getWeather(result[0].lat, result[0].lon);
+  console.log(result[0].lat, result[0].lon);
 }
 
 //filter
