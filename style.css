@@ -74,6 +74,7 @@ p {
   left: 50%;
   transform: translateX(-50%);
   text-align: center;
+  animation: scale 0.5s;
 }
 
 /*
@@ -506,7 +507,7 @@ footer p {
     margin: 3px 20px 0px 0px;
   }
 }
-@media (min-width: 1000px) {
+@media (min-width: 1038px) {
   .containerBottom > div > .display > div {
     display: grid;
     grid-template-columns: 2.5fr 1fr;

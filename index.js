@@ -430,7 +430,7 @@ function shortAnswer(item) {
   }
 }
 
-//comedown
+//Comedown
 function comeDown(item, hiddenItem) {
   item.addEventListener("click", (e) => {
     hiddenItem.forEach((item2) => {
@@ -454,7 +454,7 @@ function comeDown(item, hiddenItem) {
   });
 }
 
-//Arrow
+//Windarrow
 function customArrow(deg, speed, index) {
   let arrow = document.getElementsByClassName("arrow");
   speed = Math.round(speed);
