@@ -143,27 +143,31 @@ async function getWeather(latitude, longitude) {
   todayListLast.classList.add("margin-bottom");
 
   //if there is no middle of the day info yet for the last day -  DOES WORK, BUT MESSES UP THE STYLING, BECAUSE THE NEW DISPLAY IS INSIDE THE CONTAINER SLIDEDOWN
-  // const containerSlideDown5 = document.querySelector(".containerSlideDown5");
-  // const containerSlideDown5Arr = Array.from(containerSlideDown5.children);
-  // let arrayAnswers = [];
-  // containerSlideDown5Arr.forEach((item) => {
-  //   if (item.classList.contains("display")) {
-  //     arrayAnswers.push(true);
-  //   } else {
-  //     arrayAnswers.push(false);
-  //   }
-  // });
+  const containerSlideDown5 = document.querySelector(".containerSlideDown5");
+  const containerSlideDown5Arr = Array.from(containerSlideDown5.children);
+  let arrayAnswers = [];
+  containerSlideDown5Arr.forEach((item) => {
+    if (item.classList.contains("display")) {
+      arrayAnswers.push(true);
+    } else {
+      arrayAnswers.push(false);
+    }
+  });
 
-  // let includesDisplay = arrayAnswers.includes(true);
-  // if (includesDisplay == false) {
-  //   containerSlideDown5Arr[containerSlideDown5Arr.length - 1].classList.replace(
-  //     "off",
-  //     "display"
-  //   );
-  //   futureShow5.prepend(
-  //     containerSlideDown5Arr[containerSlideDown5Arr.length - 1]
-  //   );
-  // }
+  let includesDisplay = arrayAnswers.includes(true);
+  if (includesDisplay == false) {
+    containerSlideDown5Arr[containerSlideDown5Arr.length - 1].classList.replace(
+      "off",
+      "display"
+    );
+    futureShow5.prepend(
+      containerSlideDown5Arr[containerSlideDown5Arr.length - 1]
+    );
+    let date = futureShow5.querySelector("div h2");
+    let dateUnix = date.className;
+    console.log(date);
+    date.innerHTML = dayjs(dateUnix * 1000).format("ddd MMMM D");
+  }
 }
 
 //turn it in html
