@@ -141,6 +141,29 @@ async function getWeather(latitude, longitude) {
   let todayList = document.querySelectorAll(".today");
   let todayListLast = todayList[todayList.length - 1];
   todayListLast.classList.add("margin-bottom");
+
+  //if there is no middle of the day info yet for the last day -  DOES WORK, BUT MESSES UP THE STYLING, BECAUSE THE NEW DISPLAY IS INSIDE THE CONTAINER SLIDEDOWN
+  // const containerSlideDown5 = document.querySelector(".containerSlideDown5");
+  // const containerSlideDown5Arr = Array.from(containerSlideDown5.children);
+  // let arrayAnswers = [];
+  // containerSlideDown5Arr.forEach((item) => {
+  //   if (item.classList.contains("display")) {
+  //     arrayAnswers.push(true);
+  //   } else {
+  //     arrayAnswers.push(false);
+  //   }
+  // });
+
+  // let includesDisplay = arrayAnswers.includes(true);
+  // if (includesDisplay == false) {
+  //   containerSlideDown5Arr[containerSlideDown5Arr.length - 1].classList.replace(
+  //     "off",
+  //     "display"
+  //   );
+  //   futureShow5.prepend(
+  //     containerSlideDown5Arr[containerSlideDown5Arr.length - 1]
+  //   );
+  // }
 }
 
 //turn it in html
