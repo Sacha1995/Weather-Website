@@ -87,22 +87,31 @@ async function getWeather(latitude, longitude) {
   createHTML("", containerBottom, `FutureShow2`, "div");
   createHTML("", containerBottom, `FutureShow3`, "div");
   createHTML("", containerBottom, `FutureShow4`, "div");
-  createHTML("", containerBottom, `FutureShow5`, "div");
   let futureShow1 = document.querySelector(`.FutureShow1`);
   let futureShow2 = document.querySelector(`.FutureShow2`);
   let futureShow3 = document.querySelector(`.FutureShow3`);
   let futureShow4 = document.querySelector(`.FutureShow4`);
-  let futureShow5 = document.querySelector(`.FutureShow5`);
   createHTML("", futureShow1, "containerSlideDown1", "div");
   createHTML("", futureShow2, "containerSlideDown2", "div");
   createHTML("", futureShow3, "containerSlideDown3", "div");
   createHTML("", futureShow4, "containerSlideDown4", "div");
-  createHTML("", futureShow5, "containerSlideDown5", "div");
 
-  // goes through the API info
+  // goes through the API info and filters
   result.list.forEach((item, index) => {
-    create(item, index);
+    filterAPI(item, index);
   });
+
+  function filterAPI(item, index) {
+    console.log(item, index);
+    const date = new Date(item.dt * 1000);
+    const today = new Date();
+    if (date.getDate() !== today.getDate() + 5) {
+      create(item, index); // creates HTML
+      filter(item, index); //filters HTML and puts in right container
+      display = document.getElementsByClassName("display");
+      future = document.getElementsByClassName("future");
+    }
+  }
 
   //answer and picture
   createHTML(
@@ -123,42 +132,7 @@ async function getWeather(latitude, longitude) {
     "prepend"
   );
 
-  //filter
-  result.list.forEach((item, index) => {
-    filter(item, index);
-    display = document.getElementsByClassName("display");
-    future = document.getElementsByClassName("future");
-    customArrow(item.wind.deg, item.wind.speed, index);
-  });
-
-  //if there is no middle of the day info yet for the last day -  DOES WORK, BUT MESSES UP THE STYLING, BECAUSE THE NEW DISPLAY IS INSIDE THE CONTAINER SLIDEDOWN
-  const containerSlideDown5 = document.querySelector(".containerSlideDown5");
-  const containerSlideDown5Arr = Array.from(containerSlideDown5.children);
-  let arrayAnswers = [];
-  containerSlideDown5Arr.forEach((item) => {
-    if (item.classList.contains("display")) {
-      arrayAnswers.push(true);
-    } else {
-      arrayAnswers.push(false);
-    }
-  });
-
-  let includesDisplay = arrayAnswers.includes(true);
-  if (includesDisplay == false) {
-    containerSlideDown5Arr[containerSlideDown5Arr.length - 1].classList.replace(
-      "off",
-      "display"
-    );
-    futureShow5.prepend(
-      containerSlideDown5Arr[containerSlideDown5Arr.length - 1]
-    );
-    let date = futureShow5.querySelector("div h2");
-    let dateUnix = date.className;
-    console.log(date);
-    date.innerHTML = dayjs(dateUnix * 1000).format("ddd MMMM D");
-  }
-
-  //clickable
+  //clickable show rest of weather details
   let displayArr = Array.from(display);
   let futureArr = Array.from(future);
 
@@ -236,6 +210,7 @@ function create(item, index) {
   createHTML(`Windspeed: ${Math.round(wind.speed)}`, statsContainer, "wind");
   let windElement = document.getElementsByClassName("wind");
   createHTML("", windElement[index], "arrow", "img", "./img/up-arrow.svg");
+  customArrow(item.wind.deg, item.wind.speed, index);
   createHTML(weather[0].description.capitalize(), statsContainer, "clouds");
   createHTML("", containerFuture, `iconContainer${index}`, "div");
   let iconContainer = document.querySelector(`.iconContainer${index}`);
@@ -243,7 +218,8 @@ function create(item, index) {
   createHTML(shortAnswer(item), iconContainer, "shortAnswer");
   createHTML("", iconContainer, "image", "img", icon);
 
-  for (let i = 1; i < 6; i++) {
+  //append weather items to the right place
+  for (let i = 1; i < 5; i++) {
     let futureShow = document.querySelector(`.FutureShow${i}`);
     let containerSlideDown = document.querySelector(`.containerSlideDown${i}`);
     containerSlideDown.classList.add("containerSlideDown");
@@ -453,7 +429,9 @@ function comeDown(item, hiddenItem) {
 //Arrow
 function customArrow(deg, speed, index) {
   let arrow = document.getElementsByClassName("arrow");
+  console.log(arrow);
   speed = Math.round(speed);
+  console.log(deg, speed, index);
   if (speed === 0 || speed === 1) {
     arrow[index].style.backgroundColor = "rgba(183, 231, 252, 1)";
   } else if (speed === 2 || speed === 3 || speed === 4) {
@@ -471,7 +449,6 @@ function customArrow(deg, speed, index) {
   } else {
     arrow[index].style.backgroundColor = "white";
   }
-  // arrow[index].style.transform = "rotate(" + 90 + " deg)"; this one does not work?
   arrow[index].style.webkitTransform = "rotate(" + deg + "deg)";
 }
 

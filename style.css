@@ -422,21 +422,11 @@ footer p {
     position: absolute;
     z-index: 2;
     left: 0;
-  }
-  .containerSlideDown4,
-  .containerSlideDown5 {
-    position: absolute;
-    z-index: 2;
-    left: 0;
     bottom: 254px;
     flex-wrap: wrap-reverse;
   }
-  .containerSlideDown4 .on,
-  .containerSlideDown5 .on {
+  .containerSlideDown .on {
     animation: slideUp 0.5s ease-in-out !important;
-  }
-  .containerSlideDown5 {
-    right: 0px;
   }
   h1,
   .answer {
@@ -450,7 +440,7 @@ footer p {
   }
   .containerBottom > div {
     flex-grow: 1;
-    flex-basis: 33%;
+    flex-basis: 25%;
   }
   .containerBottom > div > .display > div {
     grid-template-columns: fit-content(170px);
@@ -531,8 +521,7 @@ footer p {
     grid-column-start: 1;
     grid-column-end: 3;
   }
-  .containerSlideDown4,
-  .containerSlideDown5 {
+  .containerSlideDown {
     bottom: 162px;
   }
 }
@@ -544,7 +533,7 @@ footer p {
     display: flex;
     flex-wrap: wrap;
     z-index: 2;
-    bottom: 254px;
+    bottom: 162px;
     left: 1px;
     max-width: 1370px;
     width: 100%;
@@ -570,17 +559,6 @@ footer p {
   }
   .containerIntro {
     padding: 10px 50px;
-  }
-  .display .iconContainer {
-    grid-row-start: 3;
-    grid-row-end: 4;
-    grid-column: 1;
-  }
-  .containerBottom > div > .display > div {
-    grid-template-columns: fit-content(170px);
-    justify-content: center;
-    align-content: center;
-    gap: 5px 0px;
   }
   footer {
     border: none;
