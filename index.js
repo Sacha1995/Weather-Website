@@ -131,17 +131,6 @@ async function getWeather(latitude, longitude) {
     customArrow(item.wind.deg, item.wind.speed, index);
   });
 
-  let displayArr = Array.from(display);
-  let futureArr = Array.from(future);
-
-  displayArr.forEach((item) => {
-    comeDown(item, futureArr);
-  });
-
-  let todayList = document.querySelectorAll(".today");
-  let todayListLast = todayList[todayList.length - 1];
-  todayListLast.classList.add("margin-bottom");
-
   //if there is no middle of the day info yet for the last day -  DOES WORK, BUT MESSES UP THE STYLING, BECAUSE THE NEW DISPLAY IS INSIDE THE CONTAINER SLIDEDOWN
   const containerSlideDown5 = document.querySelector(".containerSlideDown5");
   const containerSlideDown5Arr = Array.from(containerSlideDown5.children);
@@ -168,6 +157,18 @@ async function getWeather(latitude, longitude) {
     console.log(date);
     date.innerHTML = dayjs(dateUnix * 1000).format("ddd MMMM D");
   }
+
+  //clickable
+  let displayArr = Array.from(display);
+  let futureArr = Array.from(future);
+
+  let todayList = document.querySelectorAll(".today");
+  let todayListLast = todayList[todayList.length - 1];
+  todayListLast.classList.add("margin-bottom");
+
+  displayArr.forEach((item) => {
+    comeDown(item, futureArr);
+  });
 }
 
 //turn it in html
