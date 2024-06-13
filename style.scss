@@ -80,6 +80,16 @@ p {
   }
 }
 
+.errorMsg {
+  background-color: $orange;
+  padding: 10px;
+  position: fixed;
+  top: 90px;
+  left: 50%;
+  transform: translateX(-50%);
+  text-align: center;
+}
+
 /*
 ************END***********
 */

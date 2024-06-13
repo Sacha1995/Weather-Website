@@ -1,10 +1,24 @@
+// imports
+import {
+  blue,
+  engLang,
+  green,
+  lightblue,
+  orange,
+  purple,
+  red,
+  toast,
+  yellow,
+} from "./general.js";
+
+import { spinner } from "./spinner.js";
+
 // //elements
 const rootRef = document.getElementById("root");
-let icon;
-let title;
-let intro;
 let display;
 let future;
+let title;
+let intro;
 
 //capitalize first letter
 Object.defineProperty(String.prototype, "capitalize", {
@@ -26,6 +40,7 @@ function success({ coords }) {
 }
 function error(error) {
   console.log("Error", error);
+  main.innerHTML = toast(engLang[error]);
 }
 
 //go get the weather data from the api
@@ -33,22 +48,54 @@ async function getWeather(latitude, longitude) {
   const url = `https://api.openweathermap.org/data/2.5/forecast?lat=${latitude}&lon=${longitude}&appid=c9c04097e886eeff6e86ac740354f877&units=metric`;
 
   //get data and turn into object
-  let result = await fetch(url);
-  result = await result.json();
-  console.log(result);
+  let result;
+  try {
+    result = await fetch(url);
+    result = await result.json();
+    console.log(result);
+  } catch (e) {
+    error(e);
+    return;
+  }
 
-  // Change place name & containers
-  title = "Can the kids play outside?";
-
-  intro =
-    result.city.name == undefined
-      ? `The weather for the next 5 days;`
-      : `The weather for the next 5 days in ${result.city.name}:`;
-
-  createHTML(intro, main, "intro", "p", "", "prepend");
+  // Create HTML
+  main.innerHTML = ""; // deletes spinner
+  createHTML(
+    `The weather for the next 5 days in ${result.city.name}:`,
+    main,
+    "intro",
+    "p",
+    "",
+    "prepend"
+  );
   intro = document.querySelector(".intro");
-  createHTML(title, main, "title", "h1", "", "prepend");
+  createHTML("Can the kids play outside?", main, "title", "h1", "", "prepend");
   title = document.querySelector(".title");
+
+  // containers for styling --- not very well done, could definitely be shorter....
+  createHTML("", main, "containerWeather", "div");
+  const containerWeather = document.querySelector(".containerWeather");
+  createHTML("", containerWeather, "containerTop", "div", "", "prepend");
+  const containerTop = document.querySelector(".containerTop");
+  createHTML("", containerTop, "containerAnswer", "div");
+  const containerAnswer = document.querySelector(".containerAnswer");
+  createHTML("", containerTop, "containerToday", "div");
+  const containerToday = document.querySelector(".containerToday");
+  createHTML("", containerWeather, "containerBottom", "div");
+  const containerBottom = document.querySelector(".containerBottom");
+  createHTML("", containerBottom, `FutureShow1`, "div");
+  createHTML("", containerBottom, `FutureShow2`, "div");
+  createHTML("", containerBottom, `FutureShow3`, "div");
+  createHTML("", containerBottom, `FutureShow4`, "div");
+  let futureShow1 = document.querySelector(`.FutureShow1`);
+  let futureShow2 = document.querySelector(`.FutureShow2`);
+  let futureShow3 = document.querySelector(`.FutureShow3`);
+  let futureShow4 = document.querySelector(`.FutureShow4`);
+  createHTML("", futureShow1, "containerSlideDown1", "div");
+  createHTML("", futureShow2, "containerSlideDown2", "div");
+  createHTML("", futureShow3, "containerSlideDown3", "div");
+  createHTML("", futureShow4, "containerSlideDown4", "div");
+
   createHTML("", main, "containerSun", "div");
   let containerSun = document.querySelector(".containerSun");
   createHTML(
@@ -73,36 +120,12 @@ async function getWeather(latitude, longitude) {
     "img",
     "./img/weather-icons/017-sunrise.svg"
   );
-
-  // containers for styling --- not very well done, could definitely be shorter....
-  createHTML("", containerWeather, "containerTop", "div", "", "prepend");
-  const containerTop = document.querySelector(".containerTop");
-  createHTML("", containerTop, "containerAnswer", "div");
-  const containerAnswer = document.querySelector(".containerAnswer");
-  createHTML("", containerTop, "containerToday", "div");
-  const containerToday = document.querySelector(".containerToday");
-  createHTML("", containerWeather, "containerBottom", "div");
-  const containerBottom = document.querySelector(".containerBottom");
-  createHTML("", containerBottom, `FutureShow1`, "div");
-  createHTML("", containerBottom, `FutureShow2`, "div");
-  createHTML("", containerBottom, `FutureShow3`, "div");
-  createHTML("", containerBottom, `FutureShow4`, "div");
-  let futureShow1 = document.querySelector(`.FutureShow1`);
-  let futureShow2 = document.querySelector(`.FutureShow2`);
-  let futureShow3 = document.querySelector(`.FutureShow3`);
-  let futureShow4 = document.querySelector(`.FutureShow4`);
-  createHTML("", futureShow1, "containerSlideDown1", "div");
-  createHTML("", futureShow2, "containerSlideDown2", "div");
-  createHTML("", futureShow3, "containerSlideDown3", "div");
-  createHTML("", futureShow4, "containerSlideDown4", "div");
-
   // goes through the API info and filters
   result.list.forEach((item, index) => {
     filterAPI(item, index);
   });
 
   function filterAPI(item, index) {
-    console.log(item, index);
     const date = new Date(item.dt * 1000);
     const today = new Date();
     if (date.getDate() !== today.getDate() + 5) {
@@ -148,8 +171,6 @@ async function getWeather(latitude, longitude) {
 //turn it in html
 createHTML("", rootRef, "main", "main");
 const main = document.querySelector("main");
-createHTML("", main, "containerWeather", "div");
-const containerWeather = document.querySelector(".containerWeather");
 
 function createHTML(
   text,
@@ -188,7 +209,7 @@ function create(item, index) {
   //creating content
   const { dt, wind, weather } = item;
   const { temp_max, temp_min, temp } = item.main;
-  icon = weather[0].icon;
+  let icon = weather[0].icon;
 
   // //filter try two
 
@@ -251,7 +272,7 @@ function unixToHuman(UnixTime) {
   }
 }
 
-//search API
+//search API HTML
 const Containerintro = document.createElement("div");
 Containerintro.classList.add("containerIntro");
 rootRef.prepend(Containerintro);
@@ -269,24 +290,31 @@ search.setAttribute("type", "text");
 createHTML("Search", Containerintro, "searchBtn", "button");
 const searchBtn = document.querySelector(".searchBtn");
 
+//searchAPI eventlisteners
 searchBtn.addEventListener("click", (e) => {
   let searchCity = search.value;
   getSearchAPI(searchCity);
 });
 
+search.addEventListener("keydown", (e) => {
+  if (e.keyCode == 13) {
+    let searchCity = search.value;
+    getSearchAPI(searchCity);
+  }
+});
+
+// API function
 async function getSearchAPI(city) {
+  main.innerHTML = spinner;
   let searchURL = `http://api.openweathermap.org/geo/1.0/direct?q=${city},&limit=5&appid=c9c04097e886eeff6e86ac740354f877`;
   let result = await fetch(searchURL);
   result = await result.json();
-  const containerWeather = document.querySelector(".containerWeather");
-  const containerSun = document.querySelector(".containerSun");
-  if (containerWeather.innerHTML) {
-    containerWeather.innerHTML = "";
-    title.innerHTML = "";
-    intro.innerHTML = "";
-    containerSun.innerHTML = "";
+  try {
+    getWeather(result[0].lat, result[0].lon);
+  } catch (e) {
+    error(e);
+    return;
   }
-  getWeather(result[0].lat, result[0].lon);
   console.log(result[0].lat, result[0].lon);
 }
 
@@ -429,31 +457,23 @@ function comeDown(item, hiddenItem) {
 //Arrow
 function customArrow(deg, speed, index) {
   let arrow = document.getElementsByClassName("arrow");
-  console.log(arrow);
   speed = Math.round(speed);
-  console.log(deg, speed, index);
   if (speed === 0 || speed === 1) {
-    arrow[index].style.backgroundColor = "rgba(183, 231, 252, 1)";
+    arrow[index].style.backgroundColor = lightblue;
   } else if (speed === 2 || speed === 3 || speed === 4) {
-    arrow[index].style.backgroundColor = "rgba(133, 188, 239, 1)";
+    arrow[index].style.backgroundColor = blue;
   } else if (speed === 5 || speed === 6) {
-    arrow[index].style.backgroundColor = "rgba(169, 243, 167, 1)";
+    arrow[index].style.backgroundColor = green;
   } else if (speed === 7 || speed === 8) {
-    arrow[index].style.backgroundColor = "rgba(248, 255, 172, 1)";
+    arrow[index].style.backgroundColor = yellow;
   } else if (speed === 9 || speed === 10) {
-    arrow[index].style.backgroundColor = "rgba(251, 189, 99, 1)";
+    arrow[index].style.backgroundColor = orange;
   } else if (speed === 11) {
-    arrow[index].style.backgroundColor = "rgba(244, 150, 130, 1)";
+    arrow[index].style.backgroundColor = red;
   } else if (speed === 12) {
-    arrow[index].style.backgroundColor = "rgba(180, 130, 244, 1)";
+    arrow[index].style.backgroundColor = purple;
   } else {
     arrow[index].style.backgroundColor = "white";
   }
   arrow[index].style.webkitTransform = "rotate(" + deg + "deg)";
 }
-
-//viewport height
-let viewportHeight = window.innerHeight;
-console.log(viewportHeight);
-let viewportWidth = window.innerWidth;
-console.log(viewportWidth);

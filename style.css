@@ -66,6 +66,16 @@ p {
     transform: scale(1, 1);
   }
 }
+.errorMsg {
+  background-color: rgb(251, 189, 99);
+  padding: 10px;
+  position: fixed;
+  top: 90px;
+  left: 50%;
+  transform: translateX(-50%);
+  text-align: center;
+}
+
 /*
 ************END***********
 */
