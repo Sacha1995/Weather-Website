@@ -6,6 +6,8 @@ export const orange = "rgba(251, 189, 99, 1)";
 export const red = "rgba(244, 150, 130, 1)";
 export const purple = "rgba(180, 130, 244, 1)";
 
+export const rootRef = document.getElementById("root");
+
 export function toast(message) {
   if (message === undefined) {
     message = "Sorry, something went wrong. Please try again or search a city";
