@@ -40,7 +40,7 @@ export function create(item, index) {
   let icon = weather[0].icon;
   // //filter try two
 
-  const date = new Date(item.dt * 1000);
+  const date = new Date(dt * 1000);
   const today = new Date();
   weatherItem = document.getElementById(`weather-item${index}`);
 
@@ -71,12 +71,22 @@ export function create(item, index) {
     let futureShow = document.querySelector(`.FutureShow${i}`);
     let containerSlideDown = document.querySelector(`.containerSlideDown${i}`);
     containerSlideDown.classList.add("containerSlideDown");
-    if (date.getDate() === today.getDate() + i)
+
+    // Create a new date object for the future day
+    let futureDate = new Date(today);
+    futureDate.setDate(today.getDate() + i); // Adds 'i' days to 'today'
+
+    console.log("date:", date.getDate());
+    console.log("Future Date:", futureDate.getDate());
+
+    // Check if the date matches and the hour is 12 or 13
+    if (date.getDate() === futureDate.getDate()) {
       if (date.getHours() === 12 || date.getHours() == 13) {
         futureShow.prepend(weatherItem);
       } else {
         containerSlideDown.append(weatherItem);
       }
+    }
   }
 }
 

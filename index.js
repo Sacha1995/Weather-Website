@@ -57,18 +57,23 @@ async function getWeather(latitude, longitude) {
     filterAPI(item, index);
   });
 
-  // Create HTML
-  createComeDown(result);
-
   //filter API
   function filterAPI(item, index) {
     const date = new Date(item.dt * 1000);
     const today = new Date();
-    if (date.getDate() !== today.getDate() + 5) {
+
+    // Calculate the future date (5 days from today)
+    let futureDate = new Date(today);
+    futureDate.setDate(today.getDate() + 5);
+
+    if (date.getDate() !== futureDate.getDate()) {
       create(item, index); // creates HTML
       filter(item, index); //filters HTML and puts in right container
     }
   }
+
+  // Create HTML
+  createComeDown(result);
 }
 
 //searchAPI eventlisteners

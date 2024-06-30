@@ -80,8 +80,11 @@ export function writeWeather(result) {
     "img",
     "./img/weather-icons/017-sunrise.svg"
   );
+}
 
+export function createComeDown(result) {
   //answer and picture
+  const containerAnswer = document.querySelector(".containerAnswer");
   createHTML(
     "",
     containerAnswer,
@@ -99,12 +102,11 @@ export function writeWeather(result) {
     "",
     "prepend"
   );
-}
 
-export function createComeDown() {
   //clickable show rest of weather details
   let display = document.getElementsByClassName("display");
   let displayArr = Array.from(display);
+  console.log(displayArr);
   let future = document.getElementsByClassName("future");
   let futureArr = Array.from(future);
 
